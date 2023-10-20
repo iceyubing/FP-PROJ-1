@@ -21,8 +21,6 @@ def askInfoGame():
     nrPlayers = int(input("How many players? "))
     return minL, maxL, nrPlayers
     
-
-
 # *****************************************************
 def randomFill(min, max, useSeed = 0):
     """
@@ -46,7 +44,6 @@ def randomFill(min, max, useSeed = 0):
     if useSeed:
         seed(None)
     return randint(min, max)
-
 
 # *****************************************************
 def initializePlayers(number):
@@ -74,9 +71,7 @@ def initializePlayers(number):
         name = input(f"Name of player {i + 1}? ")
         players.append({"name": name, "score": 0, "playing": True})
     return players
-    
-
-
+   
 # *****************************************************
 def showInfoRound(nrR):
     """
@@ -94,7 +89,7 @@ def showInfoRound(nrR):
 
     """
     print(f"========== ROUND NUMBER {nrR} ==========\n")
-
+    
 # *****************************************************
 def showInfoBottle(liquid, maxLiquid, deltaDown, deltaUp):
     """
@@ -130,6 +125,23 @@ def showInfoBottle(liquid, maxLiquid, deltaDown, deltaUp):
     None.
 
     """
+    percentage = (liquid / maxLiquid) * 100
+    lower_bound = max(0, percentage - (percentage * deltaDown))
+    upper_bound = min(100, percentage + (percentage * deltaUp))
+    print(f"The bottle is between {lower_bound:.2f}% and {upper_bound:.2f}% full")
+    
+    lower_interval = int(lower_bound // 10)
+    upper_interval = int(upper_bound // 10)
+    
+    # Display the bottle content
+    for i in range(9, -1, -1):
+        if lower_interval <= i < upper_interval:
+            print("|@@|")
+        else:
+           print("|  |")
+
+    print("----")
+
 # *****************************************************
 def notLostYet(players, nr):
     """
@@ -149,6 +161,8 @@ def notLostYet(players, nr):
         False otherwise.
 
     """
+    return players[nr]["playing"]
+
 # *****************************************************
 def askForQuantity(players, nr):
     """
@@ -168,6 +182,8 @@ def askForQuantity(players, nr):
         The the quantity that the player number nr wants to add to the bottle.
 
     """
+    return int(input(f"Player {players[nr]['name']}: how much liquid? "))
+
 # *****************************************************
 def updatePlayerScores(players, nr, qty):
     """
@@ -188,6 +204,7 @@ def updatePlayerScores(players, nr, qty):
     None.
 
     """
+    players[nr]["score"] += qty
 
 # *****************************************************
 def updatePlayerLost(players, nr):
@@ -206,7 +223,8 @@ def updatePlayerLost(players, nr):
     None.
 
     """
-    
+    players[nr]["playing"] = False
+
 # *****************************************************
 def allLost(players):
     """
@@ -223,6 +241,10 @@ def allLost(players):
         True is all players have already lost. False otherwise.
 
     """
+    for player in players:
+        if player["playing"]:
+            return False
+    return True
 
 # *****************************************************
 def showInfoResult(bottle,maxL,players,nr,nrRounds):
@@ -248,6 +270,21 @@ def showInfoResult(bottle,maxL,players,nr,nrRounds):
     None.
 
     """
+    print("********** GAME OVER **********")
+    if bottle == maxL and not allLost(players):
+        winner = players[nr]
+        print(f"The bottle is finally full. Game over!! {winner['name']} won the game in {nrRounds} rounds /n")
+        print("FINAL SCORES:")
+        print(f"{'NAME':<25} {'SCORE':<10} {'BONUS':<10}")
+        for player in players:
+            if player == winner:
+                print(f"{player['name']:<25} {player['score']:<10} {winBonus:<10}")
+            else:
+                print(f"{player['name']:<25} Lost{'':<10}")
+    else:
+        print("All players lost! The game is over")
+
+
 #######################################################
 ##################  MAIN PROGRAM ######################
 #######################################################
@@ -288,4 +325,3 @@ while not endGame:
            endGame = liquidInBottle == maxLiquid or allLost(players)
 
 showInfoResult(liquidInBottle,maxLiquid,players,nr,nrRounds)
-

@@ -19,6 +19,14 @@ def askInfoGame():
     minL = int(input("Minimum volume of bottle? "))
     maxL = int(input("Maximum volume of bottle? "))
     nrPlayers = int(input("How many players? "))
+    while minL > maxL:
+        print ("The state of the bottle is wrong, The minimum volume is bigger then maximum volume")
+        print ("Please change the volume")
+        minL = int(input("Minimum volume of bottle? "))
+        maxL = int(input("Maximum volume of bottle? "))
+    while nrPlayers <= 0:
+        print ("The number of the players can not be 0 ou negative, please try again.")
+        nrPlayers = int(input("How many players? "))
     return minL, maxL, nrPlayers
     
 # *****************************************************

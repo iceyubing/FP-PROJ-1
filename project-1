@@ -273,7 +273,8 @@ def showInfoResult(bottle,maxL,players,nr,nrRounds):
     print("********** GAME OVER **********")
     if bottle == maxL and not allLost(players):
         winner = players[nr]
-        print(f"The bottle is finally full. Game over!! {winner['name']} won the game in {nrRounds} rounds /n")
+        print( "The bottle is finally full. Game over!!")
+        print(f"{winner['name']} won the game in {nrPlayers} palyers")
         print("FINAL SCORES:")
         print(f"{'NAME':<25} {'SCORE':<10} {'BONUS':<10}")
         for player in players:
@@ -283,8 +284,6 @@ def showInfoResult(bottle,maxL,players,nr,nrRounds):
                 print(f"{player['name']:<25} Lost{'':<10}")
     else:
         print("All players lost! The game is over")
-
-
 #######################################################
 ##################  MAIN PROGRAM ######################
 #######################################################

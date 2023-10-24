@@ -1,3 +1,8 @@
+"""
+Group Number: FP24
+Students: [Yubing Chen ( )], [Sona Moravcikova (fc62932)]
+Project 1
+"""
 from random import seed
 from random import randint
  

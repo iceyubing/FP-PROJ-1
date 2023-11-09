@@ -1,0 +1,206 @@
+"""
+Group Number: FP24
+Students: [Yubing Chen (52915)], [Sona Moravcikova (62932)]
+Project 2
+"""
+import random
+#######################################################
+####################  FUNCTIONS  ######################
+#######################################################        
+
+def askForExpertise():
+    """
+    Ask user to select their expertise level.
+    
+    Returns
+    -------
+    integer
+       An integer, in the interval [MAX_EXPERT, LESS_EXPERT].
+    """
+    
+    while True:
+        try:
+            expertise = int(input("Expert level - from 1 (radical) to 5 (beginner)? "))
+            if MAX_EXPERT <= expertise <= LESS_EXPERT:
+                return expertise
+            else:
+                print("Please enter an expertise level between 1 and 5.")
+        except ValueError:
+            print("Please enter a valid integer.")
+    
+# *****************************************************
+def buildGameBottles(expertise):
+    """
+   Build and return a dictionary containing the information of each bottle in the game.
+   
+   Parameters
+   ----------
+   expertise : integer
+       The user's expertise level.
+   
+   Returns
+   -------
+   dictonary
+       A dictionary where each bottle is represented by a letter (key) and contains a list of symbols.
+
+    """
+    N = NR_BOTTLES - expertise
+    symbols_to_distribute = [symbol for symbol in SYMBOLS[:N] for i in range(CAPACITY)]
+
+    random.shuffle(symbols_to_distribute)
+    bottles = {column: [' '] * CAPACITY for column in LETTERS}
+
+    for row in range(7,-1, -1):
+        for column in LETTERS:
+            if symbols_to_distribute:
+                symbol = symbols_to_distribute.pop()
+                bottles[column][row] = symbol
+    
+    return bottles
+    
+# *****************************************************
+def showBottles(bottles,nrErrors):
+    """
+    Display a representation of the bottles and the number of errors in the game.
+
+    Parameters
+    ----------
+    bottles : dict
+        A dictionary containing information about the game bottles.
+    nrErrors : integer
+        Number of errors the user has committed.
+
+    Returns
+    -------
+    None
+    """
+    
+    column_names = list(LETTERS)
+    print("  " + "     ".join(column_names))
+    
+    for row_index in range(CAPACITY):
+        row = "| |".join([f" {bottles[column][row_index]} " for column in column_names])
+        print("|" +row + "|")
+        
+    print(f"NUMBER OF ERRORS: {nrErrors}")
+   
+# *****************************************************
+def askForPlay():
+    """
+    Asks user for letters that identify the source and destination bottles.
+   
+    Returns
+    -------
+    2 Strings 
+       Two strings containing the source and destination letters.
+       
+    """
+    while True:
+            source = input("Source bottle? ").upper()
+
+            if len(source) == 1 and 'A' <= source <= 'J':
+                break
+            else:
+                print("Please enter a valid single uppercase letter (A to J).")
+                
+
+    while True:
+            destin = input("Destination bottle? ").upper()
+
+            if len(destin) == 1 and 'A' <= destin <= 'J':
+                return source, destin
+            else:
+                print("Please enter a valid single uppercase letter (A to J).")
+                
+# *****************************************************
+
+def moveIsPossible(source, destin, bottles):
+   """
+   
+    Parameters
+    ----------
+   
+    Returns
+    -------
+       
+    """
+   
+# *****************************************************
+
+def doMove(source, destin,bottles):
+    """
+    
+    Parameters
+    ----------
+   
+    Returns
+    -------
+       
+    """
+   
+# *****************************************************
+
+def full(bottles):
+   """
+    
+    Parameters
+    ----------
+   
+    Returns
+    -------
+       
+    """
+   
+# *****************************************************
+
+
+def allBottlesFull(fullBottles, expertise):
+    """
+    
+    Parameters
+    ----------
+   
+    Returns
+    -------
+       
+    """
+   
+
+
+#######################################################
+##################  MAIN PROGRAM ######################
+#######################################################        
+CAPACITY = 8
+LETTERS = "ABCDEFGHIJ"
+SYMBOLS = "@#%$!+o?§"
+NR_BOTTLES = 10
+LESS_EXPERT = 5
+MAX_EXPERT = 1
+expertise = askForExpertise()
+bottles = buildGameBottles(expertise)
+nrErrors = 0
+fullBottles = 0 
+endGame = False
+showBottles(bottles, nrErrors)
+# Let's play the game
+while not endGame:
+    source, destin = askForPlay()
+    if moveIsPossible(source, destin, bottles):
+        doMove(source, destin,bottles)
+        showBottles(bottles, nrErrors)
+        if full(bottles[destin]):
+            fullBottles += 1
+            keepGo = input("Bottle filled!!! Congrats!! Keep playing? (Y/N)")
+            if keepGo == "N":
+                endGame = True
+    else:
+        print("Error!")
+        nrErrors += 1
+    endGame = allBottlesFull(fullBottles, expertise) or nrErrors == 3
+
+print("Full bottles =", fullBottles, "  Errors =", nrErrors)
+if nrErrors >= 3:
+    print("Better luck next time!")
+else:
+    print("CONGRATULATIONS!!")
+    

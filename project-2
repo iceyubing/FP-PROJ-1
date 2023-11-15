@@ -148,15 +148,31 @@ def moveIsPossible(source, destin, bottles):
 
 def doMove(source, destin,bottles):
     """
+    Move symbols from the top of the source bottle to the top of the destin bottle if their top symbols are the same.
     
     Parameters
     ----------
+    bottles : dictionary
+        A dictionary containing the information of each bottle in the game.
+    source : str
+        The identifier of the source bottle.
+    destin : str
+        The identifier of the destination bottle.
    
     Returns
     -------
-       
+    break  
     """
-   
+    while bottles[source][0] == bottles[destin][0]:
+       
+       source_top_symbol = bottles[source][0]
+       destin_top_symbol = bottles[destin][0]
+
+       if source_top_symbol == destin_top_symbol:
+           bottles[destin] = source_top_symbol + bottles[destin]
+           bottles[source] = bottles[source][len(source_top_symbol):]
+       else:
+           break  
 # *****************************************************
 
 def full(bottles):

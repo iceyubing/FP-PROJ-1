@@ -113,18 +113,37 @@ def askForPlay():
                 print("Please enter a valid single uppercase letter (A to J).")
                 
 # *****************************************************
-
 def moveIsPossible(source, destin, bottles):
    """
-   
+   Check if the top symbols of two specified bottles are equal.
+   If they are not equal, increment the error count.
+
     Parameters
     ----------
-   
+   bottles : dictionary
+        A dictionary containing the information of each bottle in the game.
+    source : str
+        The identifier of the source bottle.
+    distin : str
+        The identifier of the destination bottle.
+    nrErrors : int
+        The current error count.
+
+    Returns
+    -------
+    bool
+        True if the top symbols of both bottles are equal, False otherwise.
+
     Returns
     -------
        
     """
-   
+   if source in bottles and destin in bottles:
+        source = bottles[source][0]
+        destin = bottles[destin][0]
+        return source == destin
+   else:
+        return False, nrErrors + 1
 # *****************************************************
 
 def doMove(source, destin,bottles):

@@ -218,6 +218,11 @@ def full(aBottle):
     for elem in aBottle:
         if elem == ' ':
             return False
+
+    first_symbol = aBottle[0]
+    for symbol in aBottle:
+        if symbol != first_symbol:
+            return False
     return True
 
 # *****************************************************

@@ -96,14 +96,11 @@ def askForPlay():
        Two strings containing the source and destination letters.
        
     """
-    while True:
-            source = input("Source bottle? ").upper()
-
-            if len(source) == 1 and 'A' <= source <= 'J':
-                break
-            else:
-                print("Please enter a valid single uppercase letter (A to J).")
-                
+    source = input("Source bottle? ").upper()
+    
+    while not (len(source) == 1 and 'A' <= source <= 'J'):
+        print("Please enter a valid single uppercase letter (A to J).")
+        source = input("Source bottle? ").upper()
 
     while True:
             destin = input("Destination bottle? ").upper()

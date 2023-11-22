@@ -44,16 +44,24 @@ def buildGameBottles(expertise):
         A dictionary where each bottle is represented by a letter (key) and contains a list of symbols.
     """
     N = NR_BOTTLES - expertise
-    symbols_to_distribute = [symbol for symbol in SYMBOLS[:N] for _ in range(CAPACITY)]
+    symbols_to_distribute = [symbol for symbol in SYMBOLS[:N] for _ in range(8)]
+
+    assert len(symbols_to_distribute) == N * CAPACITY
 
     random.shuffle(symbols_to_distribute)
-    bottles = {letter: [' '] * CAPACITY for letter in LETTERS}
+    bottles = {letter: [] for letter in LETTERS}
 
-    for i in range(CAPACITY - 1, - 1, -1):
-        for letter in LETTERS:
-            if symbols_to_distribute:
+    
+    while symbols_to_distribute:
+        for bottle in random.sample(LETTERS, len(LETTERS)):
+            if len(bottles[bottle]) < CAPACITY and symbols_to_distribute:
                 symbol = symbols_to_distribute.pop()
-                bottles[bottle][i] = symbol
+                bottles[bottle].append(symbol)
+
+    
+    for bottle in bottles.keys():
+        while len(bottles[bottle]) < CAPACITY:
+            bottles[bottle].insert(0, ' ')  
 
     return bottles
 # *****************************************************

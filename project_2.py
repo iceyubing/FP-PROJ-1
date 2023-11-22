@@ -49,29 +49,11 @@ def buildGameBottles(expertise):
     random.shuffle(symbols_to_distribute)
     bottles = {letter: [' '] * CAPACITY for letter in LETTERS}
 
-    
-    for bottle in bottles.keys():
-        num_symbols = random.randint(0, CAPACITY)
-        for i in range(CAPACITY - 1, CAPACITY - num_symbols - 1, -1):
+    for i in range(CAPACITY - 1, - 1, -1):
+        for letter in LETTERS:
             if symbols_to_distribute:
                 symbol = symbols_to_distribute.pop()
                 bottles[bottle][i] = symbol
-
-    # if the quantity of symbols is not correct, we have to do it one more time
-    while symbols_to_distribute:
-        for bottle in bottles.keys():
-            if not symbols_to_distribute:
-                break
-
-            
-            for i in range(CAPACITY - 1, CAPACITY - num_symbols - 1, -1):
-                if bottles[bottle][i] == ' ':
-                    position = i
-                    while position < CAPACITY and symbols_to_distribute:
-                        symbol = symbols_to_distribute.pop()
-                        bottles[bottle][position] = symbol
-                        position += 1
-                    break  
 
     return bottles
 # *****************************************************
@@ -169,7 +151,6 @@ def moveIsPossible(source, destin, bottles):
 
     return True
 
-
 # *****************************************************
 def topOfBottle(letter):
     """
@@ -186,7 +167,6 @@ def topOfBottle(letter):
         The position of the top non-empty symbol (0-indexed) or None if the bottle is empty.
     """
     return next((i for i, symbol in enumerate(bottles[letter]) if symbol != ' '), None)
-
 
 #************************************************************
 def howManyEqualInTop(source, destin):
@@ -232,7 +212,6 @@ def howManyEqualInTop(source, destin):
 
     return num_transferable
 
-
 #************************************************************
 def doMove(source, destin, bottles):
     """
@@ -251,10 +230,6 @@ def doMove(source, destin, bottles):
     -------
     None
     """
-    if not moveIsPossible(source, destin, bottles):
-        print("Invalid move. The top symbols of both bottles do not match.")
-        return
-
     # Find the top symbol index in both source and destination bottles
     destin_index = next((i for i, symbol in enumerate(bottles[destin]) if symbol != ' '), None)
     source_index = next((i for i, symbol in enumerate(bottles[source]) if symbol != ' '), None)
@@ -262,22 +237,15 @@ def doMove(source, destin, bottles):
     if destin_index is None:
         destin_index = CAPACITY
 
-    if source_index is None:
-        print("Error! Source bottle is empty.")
-        return
-
     # Transfer symbols
     num_transferable = howManyEqualInTop(bottles[source], bottles[destin])
-    if num_transferable == 0:
-        print("Invalid move. The top symbols of both bottles do not match.")
-        return
+    
     for i in range(num_transferable):
         bottles[destin][destin_index - 1] = bottles[source][source_index]
         bottles[source][source_index] = ' '
         destin_index -= 1
         source_index += 1
-
-# ***********
+        
 # ******************************************
 def full(aBottle):
     """
@@ -303,7 +271,6 @@ def full(aBottle):
         if symbol != first_symbol:
             return False
     return True
-
 
 # *****************************************************
 def allBottlesFull(fullBottles, expertise):

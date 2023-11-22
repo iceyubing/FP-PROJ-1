@@ -58,6 +58,18 @@ def buildGameBottles(expertise):
                 symbol = symbols_to_distribute.pop()
                 bottles[bottle][i] = symbol
 
+    # if the number of symbols is not correct
+    while symbols_to_distribute:
+        for bottle in bottles.keys():
+            if not symbols_to_distribute:
+                break
+
+            
+            if ' ' in bottles[bottle]:
+                i = bottles[bottle].index(' ')  # 找到第一个空位
+                symbol = symbols_to_distribute.pop()
+                bottles[bottle][i] = symbol
+
     return bottles
 # *****************************************************
 def showBottles(bottles,nrErrors):

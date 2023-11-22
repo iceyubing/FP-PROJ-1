@@ -52,23 +52,26 @@ def buildGameBottles(expertise):
     
     for bottle in bottles.keys():
         num_symbols = random.randint(0, CAPACITY)
-
         for i in range(CAPACITY - 1, CAPACITY - num_symbols - 1, -1):
             if symbols_to_distribute:
                 symbol = symbols_to_distribute.pop()
                 bottles[bottle][i] = symbol
 
-    # if the number of symbols is not correct
+    # if the quantity of symbols is not correct, we have to do it one more time
     while symbols_to_distribute:
         for bottle in bottles.keys():
             if not symbols_to_distribute:
                 break
 
             
-            if ' ' in bottles[bottle]:
-                i = bottles[bottle].index(' ')  # 找到第一个空位
-                symbol = symbols_to_distribute.pop()
-                bottles[bottle][i] = symbol
+            for i in range(CAPACITY):
+                if bottles[bottle][i] == ' ':
+                    position = i
+                    while position < CAPACITY and symbols_to_distribute:
+                        symbol = symbols_to_distribute.pop()
+                        bottles[bottle][position] = symbol
+                        position += 1
+                    break  
 
     return bottles
 # *****************************************************

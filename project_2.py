@@ -64,7 +64,7 @@ def buildGameBottles(expertise):
                 break
 
             
-            for i in range(CAPACITY):
+            for i in range(CAPACITY - 1, CAPACITY - num_symbols - 1, -1):
                 if bottles[bottle][i] == ' ':
                     position = i
                     while position < CAPACITY and symbols_to_distribute:

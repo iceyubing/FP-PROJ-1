@@ -144,7 +144,10 @@ def moveIsPossible(source, destin, bottles):
     bool
         True if the move is possible, False otherwise.
     """
-    
+    # Check if source and destination bottles are the same
+    if source == destin:
+       return False
+        
     # Check if both bottles exist
     if source not in bottles or destin not in bottles:
         return False
@@ -169,12 +172,39 @@ def moveIsPossible(source, destin, bottles):
 
 # *****************************************************
 def topOfBottle(letter):
+    """
+    Find the position of the top non-empty symbol in the specified bottle.
+
+    Parameters
+    ----------
+    letter : str
+        The letter identifying the bottle.
+
+    Returns
+    -------
+    int or None
+        The position of the top non-empty symbol (0-indexed) or None if the bottle is empty.
+    """
     return next((i for i, symbol in enumerate(bottles[letter]) if symbol != ' '), None)
 
 
 #************************************************************
 def howManyEqualInTop(source, destin):
-    print(source)
+    """
+    Count the number of equal symbols at the top of two bottles.
+
+    Parameters
+    ----------
+    source : str
+        The identifier of the source bottle.
+    destin : str
+        The identifier of the destination bottle.
+
+    Returns
+    -------
+    int
+        The number of equal symbols at the top of the two bottles.
+    """
     num_transferable = 0
     index_a = index_b = 0
 

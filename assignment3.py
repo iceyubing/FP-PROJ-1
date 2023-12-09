@@ -1,3 +1,8 @@
+"""
+Group Number: FP24
+Students: [Yubing Chen (52915)], [Sona Moravcikova (62932)]
+Project 3
+"""
 import gameFunctions as funcs
 
 option = int(input("1 - New game \n2 - Continuation game ?\n"))
@@ -12,7 +17,7 @@ else:
     infoGame = funcs.oldGameInfo(fileName)
 
 # infoGame is a tuple with several different values??    
-?????? = infoGame
+nrBotts, bottles, botSize, nrErrors, expertise, fullBottles = infoGame
 
 endGame = False
 funcs.showBottles(bottles, botSize, nrErrors)
@@ -44,7 +49,7 @@ if source == 'Z':
                              ['YES','NO'], '')
     if store == "YES":
         fileName = input("Name of the file where to store the game information?")
-        funcs.writeGameInfo(fileName, ????????)
+        funcs.writeGameInfo(fileName, nrBotts, bottles, botSize, nrErrors, expertise, fullBottles)
         print("Hope to see you again soon!")
     else:
         print("Better luck next time!")

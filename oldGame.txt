@@ -1,0 +1,15 @@
+expertise: 3
+nrBotts: 10
+botSize: 8
+nrErrors: 2
+fullBottles: 0
+A: ##!%+#
+B: $%@$+%%
+C: +%@@+
+D: !$!#!
+E: $oo@%@
+F: $!!+o
+G: $o#+@!o$
+H: o#%#$+@o
+I: @%#o+
+J: !

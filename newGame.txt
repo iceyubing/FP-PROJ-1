@@ -1,0 +1,8 @@
+min_expertise: 1
+max_expertise: 5
+nrBotts: 10
+symbols: @#%$!+o?§
+botSize: 8
+nrErros: 0
+letters: ABCDEFGHIJ
+fullBottles: 0

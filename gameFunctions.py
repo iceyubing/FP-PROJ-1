@@ -303,64 +303,37 @@ def askUserFor(ask, options, end = ""):
 # ***************** NEW FUNCTIONS HERE ****************
 # *****************************************************
 def newGameInfo(fileName):
-    """
-    Reads information from the file for a new game and returns a tuple.
 
-    Parameters
-    ----------
-    fileName : str
-        The name of the file containing game information.
+    while True:  # Start an infinite loop
+        try:
+            
+            # Read relevant parameters from the file
+            with open(fileName, 'r') as file:
+                min_expertise = int(file.readline().split(":")[1].strip())
+                max_expertise = int(file.readline().split(":")[1].strip())
+                nrBotts = int(file.readline().split(":")[1].strip())
+                symbols = file.readline().split(":")[1].strip()
+                botSize = int(file.readline().split(":")[1].strip())
+                nrErrors = int(file.readline().split(":")[1].strip())
+                letters = file.readline().split(":")[1].strip()
+                fullBottles = int(file.readline().split(":")[1].strip())
 
-    Returns
-    -------
-    tuple
-        Tuple containing the necessary game information.
-        (nrBotts, bottles, botSize, nrErrors, expertise, fullBottles)
+            # Randomly generate expertise level within the specified interval
+            expertise = randint(min_expertise, max_expertise)
 
-    Raises
-    ------
-    Exception
-        Raises an exception if there is a problem with the file.
-        
-    File Structure
-    --------------
-    The file is expected to have the following structure:
-    min_expertise: <int>
-    max_expertise: <int>
-    nrBotts: <int>
-    symbols: <string>
-    botSize: <int>
-    nrErrors: <int>
-    letters: <string>
-    fullBottles: <int>
+            # Create a dictionary representing the bottles information
+            bottles = buildGameBottles(nrBotts, botSize, expertise, letters, symbols)
 
-    """
-    try:
-        # Read relevant parameters from the file
-        with open(fileName, 'r') as file:
-            min_expertise = int(file.readline().split(":")[1].strip())
-            max_expertise = int(file.readline().split(":")[1].strip())
-            nrBotts = int(file.readline().split(":")[1].strip())
-            symbols = file.readline().split(":")[1].strip()
-            botSize = int(file.readline().split(":")[1].strip())
-            nrErrors = int(file.readline().split(":")[1].strip())
-            letters = file.readline().split(":")[1].strip()
-            fullBottles = int(file.readline().split(":")[1].strip())
+            # Return the necessary game information and break the loop
+            return nrBotts, bottles, botSize, nrErrors, expertise, fullBottles  
 
-        # Randomly generate expertise level within the specified interval
-        expertise = randint(max_expertise, min_expertise)
+        except FileNotFoundError:
+            print("The file name you entered is wrong, please check and enter again.")
+            fileName = input("Enter the name of the file containing game information: ")
+        except Exception as e:
+            raise Exception(f"Error processing file '{fileName}': {e}")
 
-        # Calculate the number of bottles that should become full
-        #bottles_to_fill = nr_bottles - expertise -> This is calculated in the buildgamebottles
-
-        # Create a dictionary representing the bottles information
-        bottles = buildGameBottles(nrBotts, botSize, expertise, letters, symbols)
-
-        # Return the necessary game information
-        return nrBotts, bottles, botSize, nrErrors, expertise, fullBottles  
-
-    except Exception as e:
-        raise Exception(f"Error reading from file: {str(e)}")
+    
         
 # *****************************************************
 def writeGameInfo(fName, expertise, nrBotts, bottles, botSize, nrErrors, fullBottles):
@@ -431,26 +404,31 @@ def oldGameInfo(fileName):
     <letter>: <content>
     
     """
-    try:
-        # Read relevant parameters from the file
-        with open(fileName, 'r') as file:
-            expertise = int(file.readline().split(":")[1].strip())
-            nrBotts = int(file.readline().split(":")[1].strip())
-            botSize = int(file.readline().split(":")[1].strip())
-            nrErrors = int(file.readline().split(":")[1].strip())
-            fullBottles = int(file.readline().split(":")[1].strip())
+    while True:  # Start an infinite loop
+        try:
+            # Read relevant parameters from the file
+           with open(fileName, 'r') as file:
+               expertise = int(file.readline().split(":")[1].strip())
+               nrBotts = int(file.readline().split(":")[1].strip())
+               botSize = int(file.readline().split(":")[1].strip())
+               nrErrors = int(file.readline().split(":")[1].strip())
+               fullBottles = int(file.readline().split(":")[1].strip())
 
-            # Read bottles information
-            bottles = {}
-            line = file.readline().strip()
-            while line:
-                letter, content = line.split(":")
-                bottles[letter.strip()] = list(content.strip())
-                line = file.readline().strip()
+               # Read bottles information
+               bottles = {}
+               line = file.readline().strip()
+               while line:
+                   letter, content = line.split(":")
+                   bottles[letter.strip()] = list(content.strip())
+                   line = file.readline().strip()
 
-        # Return the necessary game information
-        return nrBotts, bottles, botSize, nrErrors, expertise, fullBottles  
+           # Return the necessary game information
+           return nrBotts, bottles, botSize, nrErrors, expertise, fullBottles  
 
-    except Exception as e:
-        raise Exception(f"Error reading from file: {str(e)}")
+        except FileNotFoundError:
+            print("The file name you entered is wrong, please check and enter again.")
+            fileName = input("Enter the name of the file containing game information: ")
+        except Exception as e:
+            raise Exception(f"Error processing file '{fileName}': {e}")
 
+        

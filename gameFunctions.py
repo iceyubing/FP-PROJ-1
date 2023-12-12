@@ -294,7 +294,7 @@ def askUserFor(ask, options, end = ""):
     """
     listOptions = list(options) + [end]
     answer = input(ask).upper()
-    while answer not in listOptions:
+    while answer != 'Z' answer not in listOptions:
        answer = input("Wrong choice! Repeat input: ").upper()
      
     return answer

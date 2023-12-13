@@ -294,7 +294,7 @@ def askUserFor(ask, options, end = ""):
     """
     listOptions = list(options) + [end]
     answer = input(ask).upper()
-    while answer != 'Z' answer not in listOptions:
+    while answer not in listOptions:
        answer = input("Wrong choice! Repeat input: ").upper()
      
     return answer
@@ -303,10 +303,36 @@ def askUserFor(ask, options, end = ""):
 # ***************** NEW FUNCTIONS HERE ****************
 # *****************************************************
 def newGameInfo(fileName):
-
+    """
+     Reads information from the file for a new game and returns a tuple.
+     Parameters
+     ----------
+     fileName : str
+         The name of the file containing game information.
+     Returns
+     -------
+     tuple
+         Tuple containing the necessary game information.
+         (nrBotts, bottles, botSize, nrErrors, expertise, fullBottles)
+     Raises
+     ------
+     Exception
+         Raises an exception if there is a problem with the file.
+         
+     File Structure
+     --------------
+     The file is expected to have the following structure:
+     min_expertise: <int>
+     max_expertise: <int>
+     nrBotts: <int>
+     symbols: <string>
+     botSize: <int>
+     nrErrors: <int>
+     letters: <string>
+     fullBottles: <int>
+    """
     while True:  # Start an infinite loop
         try:
-            
             # Read relevant parameters from the file
             with open(fileName, 'r') as file:
                 min_expertise = int(file.readline().split(":")[1].strip())
@@ -333,8 +359,6 @@ def newGameInfo(fileName):
         except Exception as e:
             raise Exception(f"Error processing file '{fileName}': {e}")
 
-    
-        
 # *****************************************************
 def writeGameInfo(fName, expertise, nrBotts, bottles, botSize, nrErrors, fullBottles):
     """
